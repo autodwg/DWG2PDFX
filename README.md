@@ -19,6 +19,7 @@ DWG2PDF-X, a control component allows you to convert dwg to pdf, dxf and dwf to 
 - Batch mode supported.
 
 ### Free Trial Download Link
+https://github.com/autodwg/DWG2PDFX/releases/download/v1.9.8/DWG2PDFX-v1.9.8.zip
 
 ## Getting Started
 ### Quick setup
