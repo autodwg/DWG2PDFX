@@ -1,0 +1,65 @@
+Dim obj
+Set obj= CreateObject("DWGTOPDFX.ConvertPDF")
+obj.Addexcudelayer "Defpoints"		'OffLayers
+obj.ConvertNotPlotLayer = 0		'0--do not convert non-print layer(default),1--convert non-print layer
+
+obj.Width  = 300			'uint is mm
+obj.Height = 200			'uint is mm
+obj.InputFile = "test.dwg"
+'Obj.DPI = 300
+
+obj.PenWidth(1) = 0.04			'set line width, unit in mm
+obj.PenWidth(2) = 0.04			'set line width, unit in mm
+obj.PenWidth(3) = 0.04			'set line width, unit in mm
+obj.PenWidth(4) = 0.04			'set line width, unit in mm
+obj.PenWidth(5) = 0.04			'set line width, unit in mm
+obj.PenWidth(6) = 0.04			'set line width, unit in mm
+obj.PenWidth(7) = 0.04			'set line width, unit in mm
+obj.ColorMode = 1			'1--white&black 0--256color mode
+'obj.nBackgroundColor = 0		'default background color is white, 0-black 1-red...
+						'If ColorMode = 1 (monocolor), always background = white
+'obj.PSPath = "c:\winnt\system32ws\psdddd"				'set postscript support files path.
+        'obj.AddFontPath("C:\\Xref\\")					'Add font support path
+'obj.AddFontPath "E:\Program Files\AutoCAD 2007\Fonts"		'Add font support path
+
+
+MsgBox "Total "& obj.ViewCount &" Views"
+	For I=1 to obj.ViewCount
+		strViewName = obj.ViewName(I)
+		MsgBox "Converting view: "& strViewName& "..."
+
+		'strOutput = "c:\Output\"&strViewName
+              	strOutput = strViewName&".pdf"				'output file name, include path
+		MsgBox "Page Name:" + obj.PageSetupName(I) + " Unit:" + CStr(obj.PageSizeUnit(I)) + " Width=" +CStr(obj.PageWidth(I)) + " Height=" +CStr(obj.PageHeight(I))
+									'get page information width, height, unit, page name	
+		obj.ConvertView strOutput, strViewName
+	Next
+	If Err.Number < 0 Then
+		MsgBox Err.Description
+  End If
+
+
+
+'Unit Value List
+'UnitsUndefined    = 0,
+'UnitsInches       = 1,
+'UnitsFeet         = 2,
+'UnitsMiles        = 3,
+'UnitsMillimeters  = 4,
+'UnitsCentimeters  = 5,
+'UnitsMeters       = 6,
+'UnitsKilometers   = 7,
+'UnitsMicroinches  = 8,
+'UnitsMils         = 9,
+'UnitsYards        = 10,
+'UnitsAngstroms    = 11,
+'UnitsNanometers   = 12,
+'UnitsMicrons      = 13,
+'UnitsDecimeters   = 14,
+'UnitsDekameters   = 15,
+'UnitsHectometers  = 16,
+'UnitsGigameters   = 17,
+'UnitsAstronomical = 18,
+'UnitsLightYears   = 19,
+'UnitsParsecs      = 20,
+'UnitsMax          = kUnitsParsecs	
