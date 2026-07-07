@@ -27,13 +27,15 @@ https://github.com/autodwg/DWG2PDFX/releases/download/v1.9.8/DWG2PDFX-v1.9.8.zip
 
 #### Step 1: Register the DLL Component
 
-Double-click reg.bat to automatically register DWGTOPDFX64.dll on your system.
+Double-click 'reg.bat' to automatically register 'DWGTOPDFX64.dll' on your system.
 
 If registration fails: 
 Open Command Prompt as Administrator via:
 Start Menu → Windows System → Right-click "Command Prompt" → Run as Administrator
-Manually register the DLL using: regsvr32 DWGTOPDFX64.dll
-
+Manually register the DLL using: 
+```cmd
+regsvr32 DWGTOPDFX64.dll
+```
 #### Step 2: Configure PostScript (PS) Support
 
 Copy PS Files: Move all PS-related files/folders to the default directory: C:\Windows\System32\PS\
