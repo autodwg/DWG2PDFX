@@ -1,0 +1,20 @@
+Dim obj
+Set obj= CreateObject("DWGTOPDFX.ConvertPDF")
+obj.AddExcudeLayer "Defpoints"							'OffLayers
+obj.ConvertNotPlotLayer = 0							'0--do not convert non-print layer(default),1--convert non-print layer
+obj.Width  = 914								'uint is mm
+obj.Height = 610								'uint is mm
+obj.ColorMode = 0								'1--white&black 0--256color mode
+obj.InputFile = "test.dwg"
+obj.DPI = 100
+obj.zoomtype=0
+obj.PenWidth(1) = 0.02								'set line width, unit in mm, color index (0) is black, (1) is red...etc
+obj.PSPath =  "c:\windows\system32\ps\lib;c:\windows\system32\ps\fonts"					'set postscript support files path. Please copy the PS files to the right location and add it here.
+obj.AddFontPath "C:\Fonts\"	             'Add shx font support path
+
+MsgBox "Begin converting..."
+      obj.Convert "test.pdf"
+MsgBox "Conversion complete"
+    If Err.Number < 0 Then
+		MsgBox Err.Description
+    End If
