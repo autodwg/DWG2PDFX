@@ -1,12 +1,6 @@
 # DWG2PDFX
 **AutoDWG DWG to PDF Component**
 
-## License Notice
-1. Free trial / non-commercial use: GNU LGPLv3
-2. Commercial production use, closed-source integration requires purchasing our commercial license.
-
-Contact info@autodwg.com for commercial authorization.
-
 ## AutoDWG DWG to PDF Control Component
 
 DWG2PDF-X, a control component allows you to convert dwg to pdf, dxf and dwf to pdf directly, no AutoCAD required.
@@ -76,3 +70,8 @@ If Err.Number < 0 Then
 MsgBox Err.Description
 End If
 ```
+## License Notice
+1. Free trial / non-commercial use: GNU LGPLv2.1
+2. Commercial production use, closed-source integration requires purchasing our commercial license.
+
+Contact info@autodwg.com for commercial authorization.
