@@ -1,0 +1,13 @@
+﻿{
+  "name": "autodwg-dwg2pdf-example",
+  "version": "1.0.0",
+  "description": "AutoDWG DWG2PDF SDK - Node.js Example",
+  "main": "example.js",
+  "scripts": {
+    "start": "node example.js"
+  },
+  "dependencies": {
+    "win32-ole": "^0.5.0"
+  },
+  "os": ["win32"]
+}
