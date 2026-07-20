@@ -1,9 +1,0 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net8.0-windows</TargetFramework>
-    <UseWindowsForms>true</UseWindowsForms>
-    <RootNamespace>AutoDWG.DWG2PDF</RootNamespace>
-    <AssemblyName>DWG2PDFConverter</AssemblyName>
-  </PropertyGroup>
-</Project>
