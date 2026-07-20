@@ -1,0 +1,147 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "DWG to PDF Converter";
+    var hasResult = Model.Result != null;
+    var isSuccess = hasResult && Model.Result.Success;
+}
+
+<form method="post" enctype="multipart/form-data">
+    <!-- Upload Section -->
+    <div class="card">
+        <h2>1. Select DWG File</h2>
+        <div class="form-group">
+            <label for="DwgFile">Upload a DWG file to convert:</label>
+            <input type="file" name="DwgFile" id="DwgFile" accept=".dwg" required />
+        </div>
+    </div>
+
+    <!-- Parameters Section (collapsible) -->
+    <div class="card">
+        <h2 style="cursor:pointer; user-select:none;" onclick="toggleSettings()">
+            2. Conversion Settings
+            <span id="toggleIcon" style="float:right; font-size:14px; color:#999;">@Html.Raw(hasResult ? "&#9654;" : "&#9660;")</span>
+        </h2>
+        <div id="settingsPanel" style="@(hasResult ? "display:none;" : "")">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="ColorMode">Color Mode</label>
+                    <select name="ColorMode" id="ColorMode">
+                        <option value="0" selected>256 Colors</option>
+                        <option value="1">Black &amp; White</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="DPI">DPI</label>
+                    <input type="number" name="DPI" id="DPI" value="300" min="72" max="1200" />
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="Width">Width (mm)</label>
+                    <input type="number" name="Width" id="Width" value="297" min="50" max="5000" />
+                </div>
+                <div class="form-group">
+                    <label for="Height">Height (mm)</label>
+                    <input type="number" name="Height" id="Height" value="210" min="50" max="5000" />
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="ZoomType">Zoom Type</label>
+                    <select name="ZoomType" id="ZoomType">
+                        <option value="0" selected>Zoom Extents</option>
+                        <option value="1">Last View</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="BackgroundColor">Background Color (ACI)</label>
+                    <input type="number" name="BackgroundColor" id="BackgroundColor" value="7" min="0" max="255" />
+                </div>
+            </div>
+
+            <div class="checkbox-group">
+                <label><input type="checkbox" name="OutWithTTF" value="true" checked /> Output TrueType Fonts</label>
+                <label><input type="checkbox" name="EmbeddedSearchText" value="true" /> Embed as Image</label>
+                <label><input type="checkbox" name="OutputByLayoutSize" value="true" /> Output by Layout Size</label>
+            </div>
+
+            <div class="form-group">
+                <label for="FontPath">Font Path</label>
+                <input type="text" name="FontPath" id="FontPath" value="C:\windows\system32\shxfont" />
+            </div>
+            <div class="form-group">
+                <label for="PSPath">PostScript Path</label>
+                <input type="text" name="PSPath" id="PSPath" value="c:\windows\system32\ps\lib;c:\windows\system32\ps\fonts" />
+            </div>
+        </div>
+    </div>
+
+    <!-- Convert Button -->
+    <div style="text-align: center; margin: 20px 0;">
+        <button type="submit" class="btn" id="btnConvert" onclick="this.disabled=true;this.value='Converting, please wait...';this.form.submit();">Convert to PDF</button>
+    </div>
+</form>
+
+<!-- Result Section -->
+@if (hasResult)
+{
+    <div class="card" id="resultCard">
+        <h2>3. Result</h2>
+        @if (isSuccess)
+        {
+            <div class="result success">
+                <p style="font-size:16px;"><strong>Conversion completed successfully!</strong></p>
+                <p style="margin: 10px 0;">Output file: <strong>@Model.Result.OutputFileName</strong></p>
+                <p style="margin-top: 15px;">
+                    <a href="?handler=Download&file=@Model.Result.OutputFileName" class="download-btn">
+                        &#11015; Download PDF File
+                    </a>
+                </p>
+            </div>
+        }
+        else
+        {
+            <div class="result error">
+                <p><strong>Conversion failed.</strong></p>
+                <p>@Model.Result.Message</p>
+            </div>
+        }
+    </div>
+
+    <!-- Popup + auto-collapse + scroll to result -->
+    <script>
+        // Auto-collapse settings panel
+        document.getElementById('settingsPanel').style.display = 'none';
+        document.getElementById('toggleIcon').innerHTML = '&#9654;';
+
+        // Scroll to result
+        document.getElementById('resultCard').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+        var msg = @Json.Serialize(Model.Result.Message);
+        @if (isSuccess)
+        {
+            <text>alert(msg);</text>
+        }
+        else
+        {
+            <text>alert("Conversion failed!\n\n" + msg);</text>
+        }
+    </script>
+}
+
+<script>
+function toggleSettings() {
+    var panel = document.getElementById('settingsPanel');
+    var icon = document.getElementById('toggleIcon');
+    if (panel.style.display === 'none') {
+        panel.style.display = 'block';
+        icon.innerHTML = '&#9660;';
+    } else {
+        panel.style.display = 'none';
+        icon.innerHTML = '&#9654;';
+    }
+}
+</script>
